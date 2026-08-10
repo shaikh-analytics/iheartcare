@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["iheartcare-1.onrender.com","*","https://iheartcare-1.onrender.com","https://iheartcare.onrender.com","iheartcare.onrender.com"]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://iheartcare.onrender.com",
+]
 # Application definition
 
 INSTALLED_APPS = [
