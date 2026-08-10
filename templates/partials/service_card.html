@@ -1,0 +1,14 @@
+<div class="col-lg-4 col-md-6">
+    <a href="{{ service.get_absolute_url }}" class="service-card-link text-decoration-none">
+        <div class="service-card">
+            <div class="service-card-icon mb-4">
+                <i class="fa fa-2x {{ service.icon_class }}"></i>
+            </div>
+            <h4 class="service-card-title mb-3">{{ service.title }}</h4>
+            <p class="service-card-text mb-4">{{ service.description|truncatewords:15 }}</p>
+            <span class="service-card-cta">
+                Learn More <i class="bi bi-arrow-right ms-1"></i>
+            </span>
+        </div>
+    </a>
+</div>

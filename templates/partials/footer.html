@@ -1,0 +1,74 @@
+{% load static %}
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light mt-5 py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Get In Touch</h4>
+                <p class="mb-4">{{ site_settings.about_text }}</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>{{ site_settings.address }}</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>{{ site_settings.email }}</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>{{ site_settings.phone }}</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Quick Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="{% url 'core:home' %}"><i class="fa fa-angle-right me-2"></i>Home</a>
+                    <a class="text-light mb-2" href="{% url 'core:about' %}"><i class="fa fa-angle-right me-2"></i>About Us</a>
+                    <a class="text-light mb-2" href="{% url 'core:service' %}"><i class="fa fa-angle-right me-2"></i>Our Services</a>
+                    <a class="text-light mb-2" href="{% url 'core:team' %}"><i class="fa fa-angle-right me-2"></i>Our Doctors</a>
+                    <a class="text-light mb-2" href="{% url 'core:blog' %}"><i class="fa fa-angle-right me-2"></i>Blog</a>
+                    <a class="text-light" href="{% url 'core:contact' %}"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Popular Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="{% url 'core:appointment' %}"><i class="fa fa-angle-right me-2"></i>Book Appointment</a>
+                    <a class="text-light mb-2" href="{% url 'core:search' %}"><i class="fa fa-angle-right me-2"></i>Find A Doctor</a>
+                    <a class="text-light mb-2" href="{% url 'core:price' %}"><i class="fa fa-angle-right me-2"></i>All Doctors</a>
+                    <a class="text-light mb-2" href="{% url 'core:testimonial' %}"><i class="fa fa-angle-right me-2"></i>Testimonials</a>
+                    <a class="text-light" href="{% url 'core:detail' %}"><i class="fa fa-angle-right me-2"></i>Latest Article</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Newsletter</h4>
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </div>
+                </form>
+                <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+                <div class="d-flex">
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="{{ site_settings.twitter_url }}"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="{{ site_settings.facebook_url }}"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="{{ site_settings.linkedin_url }}"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="{{ site_settings.instagram_url }}"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-md-0">&copy; <a class="text-primary" href="{% url 'core:home' %}">{{ site_settings.site_name }}</a>. All Rights Reserved.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="mb-0">Made by <span class="text-primary">AJ</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->

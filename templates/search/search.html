@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Find A Doctor - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+{% include "partials/doctor_search_box.html" with variant="page" %}
+
+
+<!-- Search Result Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row g-5">
+            {% if doctors is not None %}
+                {% for doctor in doctors %}
+                <div class="col-lg-6 team-item">
+                    {% include "partials/doctor_card.html" %}
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p>No doctors matched your search. Try a different department or keyword.</p>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <p>Choose a department or enter a keyword above to find a doctor.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Search Result End -->
+{% endblock %}

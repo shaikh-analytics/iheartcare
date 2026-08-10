@@ -1,0 +1,31 @@
+{% load static %}
+<div class="doctor-price-card bg-light rounded overflow-hidden h-100 d-flex flex-column">
+    <a href="{{ doctor.get_absolute_url }}" class="text-decoration-none text-body">
+        <div class="overflow-hidden">
+            {% if doctor.photo %}
+            <img class="img-fluid w-100 doctor-price-card-img" src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" style="height: 300px; object-fit: cover;">
+            {% else %}
+            <img class="img-fluid w-100 doctor-price-card-img" src="{% static 'core/img/team-1.jpg' %}" alt="{{ doctor.name }}" style="height: 300px; object-fit: cover;">
+            {% endif %}
+        </div>
+    </a>
+    <div class="text-center p-4 d-flex flex-column flex-grow-1">
+        <a href="{{ doctor.get_absolute_url }}" class="text-decoration-none text-body">
+            <h4 class="mb-1">{{ doctor.name }}</h4>
+        </a>
+        {% if doctor.designation %}
+        <h6 class="text-primary fw-normal fst-italic mb-3">{{ doctor.designation }}</h6>
+        {% endif %}
+        {% if doctor.qualification %}
+        <p class="text-muted small mb-2">{{ doctor.qualification }}</p>
+        {% endif %}
+        {% if doctor.bio %}
+        <p class="mb-3 flex-grow-1">{{ doctor.bio|truncatewords:20 }}</p>
+        {% endif %}
+        <div class="d-flex justify-content-center mt-auto">
+            <a class="btn btn-primary btn-lg-square rounded-circle mx-1" href="{{ doctor.twitter_url }}"><i class="fab fa-twitter"></i></a>
+            <a class="btn btn-primary btn-lg-square rounded-circle mx-1" href="{{ doctor.facebook_url }}"><i class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-primary btn-lg-square rounded-circle mx-1" href="{{ doctor.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{% load static %}
+<div class="bg-light rounded text-center">
+    <div class="position-relative">
+        {% if package.image %}
+        <img class="img-fluid rounded-top" src="{{ package.image.url }}" alt="{{ package.title }}">
+        {% else %}
+        <img class="img-fluid rounded-top" src="{% static 'core/img/price-1.jpg' %}" alt="{{ package.title }}">
+        {% endif %}
+        <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
+            style="background: rgba(29, 42, 77, .8);">
+            <h3 class="text-white">{{ package.title }}</h3>
+            <h1 class="display-4 text-white mb-0">
+                <small class="align-top fw-normal"
+                    style="font-size: 22px; line-height: 45px;">$</small>{{ package.price|floatformat:0 }}<small
+                    class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">/
+                    {{ package.period }}</small>
+            </h1>
+        </div>
+    </div>
+    <div class="text-center py-5">
+        {% for feature in package.feature_list %}
+        <p>{{ feature }}</p>
+        {% endfor %}
+        <a href="{% url 'core:appointment' %}" class="btn btn-primary rounded-pill py-3 px-5 my-2">Apply Now</a>
+    </div>
+</div>

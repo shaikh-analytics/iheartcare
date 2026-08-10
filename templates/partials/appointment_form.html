@@ -1,0 +1,63 @@
+{% comment %}
+Usage: {% include "partials/appointment_form.html" with variant="embed" %}
+variant "embed" = used inside a bg-primary call-to-action section (home/service/pricing pages)
+variant "page"  = used as the standalone appointment page content
+{% endcomment %}
+<div class="container-fluid {% if variant == 'embed' %}bg-primary my-5{% endif %} py-5">
+    <div class="container py-5">
+        <div class="row gx-5">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <h5 class="d-inline-block {% if variant == 'embed' %}text-white{% else %}text-primary{% endif %} text-uppercase border-bottom border-5">Appointment</h5>
+                    <h1 class="display-4">Make An Appointment For Your Family</h1>
+                </div>
+                <p class="{% if variant == 'embed' %}text-white{% endif %} mb-5">Book a consultation with our specialists in just a few clicks. Choose a
+                    department and doctor, pick a convenient date and time, and our team will confirm your
+                    appointment shortly.</p>
+                <a class="btn {% if variant == 'embed' %}btn-dark{% else %}btn-primary{% endif %} rounded-pill py-3 px-5 me-3" href="{% url 'core:team' %}">Find Doctor</a>
+                <a class="btn {% if variant == 'embed' %}btn-outline-dark{% else %}btn-outline-primary{% endif %} rounded-pill py-3 px-5" href="{% url 'core:about' %}">Read More</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="{% if variant == 'embed' %}bg-white{% else %}bg-light{% endif %} text-center rounded p-5">
+                    <h1 class="mb-4">Book An Appointment</h1>
+                    {% if appointment_form.errors %}
+                    <div class="alert alert-danger text-start">
+                        Please correct the errors below and try again.
+                    </div>
+                    {% endif %}
+                    <form method="post" action="{% url 'core:appointment' %}">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                {{ appointment_form.department }}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                {{ appointment_form.doctor }}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                {{ appointment_form.name }}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                {{ appointment_form.email }}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="date" id="date" data-target-input="nearest">
+                                    {{ appointment_form.preferred_date }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="time" id="time" data-target-input="nearest">
+                                    {{ appointment_form.preferred_time }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Make An
+                                    Appointment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

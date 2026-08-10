@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title|default:"Blog Detail" }} - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Blog Start -->
+<div class="container py-5">
+    {% if post %}
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <!-- Blog Detail Start -->
+            <div class="mb-5">
+                {% if post.image %}
+                <img class="img-fluid w-100 rounded mb-5" src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% endif %}
+                <h1 class="mb-4">{{ post.title }}</h1>
+                <p>{{ post.content|linebreaksbr }}</p>
+                <div class="d-flex justify-content-between bg-light rounded p-4 mt-4 mb-4">
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle me-2" src="{% static 'core/img/user.jpg' %}" width="40" height="40" alt="">
+                        <span>{{ post.author_name }}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="ms-3"><i class="far fa-eye text-primary me-1"></i>{{ post.views_count }}</span>
+                        <span class="ms-3"><i class="far fa-comment text-primary me-1"></i>{{ post.comments_count }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Detail End -->
+        </div>
+
+        <!-- Sidebar Start -->
+        <div class="col-lg-4">
+            <!-- Recent Post Start -->
+            <div class="mb-5">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">Recent Post</h4>
+                {% for related in related_posts %}
+                <div class="d-flex rounded overflow-hidden mb-3">
+                    {% if related.image %}
+                    <img class="img-fluid" src="{{ related.image.url }}"
+                        style="width: 100px; height: 100px; object-fit: cover;" alt="{{ related.title }}">
+                    {% endif %}
+                    <a href="{{ related.get_absolute_url }}" class="h5 d-flex align-items-center bg-light px-3 mb-0">{{ related.title }}
+                    </a>
+                </div>
+                {% empty %}
+                <p>No other posts yet.</p>
+                {% endfor %}
+            </div>
+            <!-- Recent Post End -->
+
+            <!-- CTA Start -->
+            <div>
+                <div class="bg-light rounded text-center" style="padding: 30px;">
+                    <p>Have questions about your health? Our specialists are here to help.</p>
+                    <a href="{% url 'core:appointment' %}" class="btn btn-primary py-2 px-4">Book Appointment</a>
+                </div>
+            </div>
+            <!-- CTA End -->
+        </div>
+        <!-- Sidebar End -->
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <h1 class="mb-4">No blog posts yet</h1>
+        <p>Check back soon for the latest medical articles.</p>
+        <a href="{% url 'core:blog' %}" class="btn btn-primary py-2 px-4">Back to Blog</a>
+    </div>
+    {% endif %}
+</div>
+<!-- Blog End -->
+{% endblock %}

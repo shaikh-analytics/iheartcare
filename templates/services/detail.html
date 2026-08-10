@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ service.title }} - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Service Hero Start -->
+<div class="service-hero">
+    {% if service.image %}
+    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="service-hero-img">
+    {% else %}
+    <img src="{% static 'core/img/about.jpg' %}" alt="{{ service.title }}" class="service-hero-img">
+    {% endif %}
+    <div class="service-hero-overlay">
+        <div class="container">
+            <div class="service-hero-icon mb-4">
+                <i class="fa fa-2x {{ service.icon_class }}"></i>
+            </div>
+            {% if service.department %}
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
+                style="border-color: rgba(256, 256, 256, .3) !important;">{{ service.department.name }}</h5>
+            {% endif %}
+            <h1 class="display-4 text-white mb-0">{{ service.title }}</h1>
+        </div>
+    </div>
+</div>
+<!-- Service Hero End -->
+
+<div class="container py-5">
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <!-- Service Detail Start -->
+            <div class="mb-5">
+                <p class="lead">{{ service.description|linebreaksbr }}</p>
+            </div>
+
+            <!-- Why Choose Us Start -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="service-benefit text-center h-100">
+                        <div class="service-card-icon mb-3">
+                            <i class="fa fa-user-md"></i>
+                        </div>
+                        <h6 class="mb-0">Certified Specialists</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-benefit text-center h-100">
+                        <div class="service-card-icon mb-3">
+                            <i class="fa fa-microscope"></i>
+                        </div>
+                        <h6 class="mb-0">Modern Equipment</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-benefit text-center h-100">
+                        <div class="service-card-icon mb-3">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <h6 class="mb-0">Patient-Centered Care</h6>
+                    </div>
+                </div>
+            </div>
+            <!-- Why Choose Us End -->
+
+            {% if specialists %}
+            <!-- Specialists Start -->
+            <div class="mb-5">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">Meet Our Specialists</h4>
+                <div class="row g-4">
+                    {% for doctor in specialists %}
+                    <div class="col-md-6">
+                        {% include "partials/doctor_price_card.html" %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Specialists End -->
+            {% endif %}
+
+            <!-- CTA Start -->
+            <div class="service-cta text-center">
+                <h3 class="mb-3">Interested in {{ service.title }}?</h3>
+                <p class="mb-4">Book an appointment with one of our specialists and we'll take care of the rest.</p>
+                <a href="{% url 'core:appointment' %}" class="btn btn-primary rounded-pill py-3 px-5">Book Appointment</a>
+            </div>
+            <!-- CTA End -->
+        </div>
+
+        <!-- Sidebar Start -->
+        <div class="col-lg-4">
+            <!-- Other Services Start -->
+            <div class="service-sidebar-card mb-4">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">Other Services</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    {% for other in other_services %}
+                    <a class="service-sidebar-link" href="{{ other.get_absolute_url }}">
+                        <span class="service-sidebar-icon"><i class="fa {{ other.icon_class }}"></i></span>
+                        {{ other.title }}
+                        <i class="bi bi-arrow-right ms-auto"></i>
+                    </a>
+                    {% empty %}
+                    <p class="mb-0">No other services yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Other Services End -->
+
+            <!-- CTA Start -->
+            <div class="service-sidebar-card text-center position-relative overflow-hidden">
+                <img src="{% static 'core/img/about.jpg' %}" alt="Contact us" class="service-sidebar-img mb-3">
+                <p>Have questions about this service? Our team is happy to help.</p>
+                <a href="{% url 'core:contact' %}" class="btn btn-primary rounded-pill py-2 px-4">Contact Us</a>
+            </div>
+            <!-- CTA End -->
+        </div>
+        <!-- Sidebar End -->
+    </div>
+</div>
+{% endblock %}

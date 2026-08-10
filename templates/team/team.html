@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Doctors - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Team Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
+            <h1 class="display-4">Qualified Healthcare Professionals</h1>
+        </div>
+        <div class="row g-5">
+            {% for doctor in doctors %}
+            <div class="col-lg-4 col-md-6">
+                {% include "partials/doctor_price_card.html" %}
+            </div>
+            {% empty %}
+            <p class="text-center">No doctors listed yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+{% endblock %}

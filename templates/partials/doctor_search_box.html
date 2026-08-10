@@ -1,0 +1,28 @@
+{% comment %}
+Usage: {% include "partials/doctor_search_box.html" with variant="embed" %}
+variant "embed" = used inside a bg-primary section (home/about pages)
+variant "page"  = used as the standalone search page's own header (no bg-primary wrapper)
+{% endcomment %}
+<div class="container-fluid {% if variant == 'embed' %}bg-primary my-5{% endif %} py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block {% if variant == 'embed' %}text-white{% else %}text-primary{% endif %} text-uppercase border-bottom border-5">Find A Doctor</h5>
+            <h1 class="display-4 mb-4">Find A Healthcare Professionals</h1>
+            <h5 class="{% if variant == 'embed' %}text-white{% endif %} fw-normal">Search by department or doctor name to find the right specialist for
+                you.</h5>
+        </div>
+        <form class="mx-auto position-relative doctor-search-form" style="width: 100%; max-width: 600px;" method="get" action="{% url 'core:search' %}" autocomplete="off" data-suggest-url="{% url 'core:doctor_search_suggest' %}">
+            <div class="input-group">
+                <select name="department" class="form-select border-primary w-25" style="height: 60px;">
+                    <option value="">Department</option>
+                    {% for department in departments %}
+                    <option value="{{ department.id }}" {% if selected_department == department.id|stringformat:"s" %}selected{% endif %}>{{ department.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="q" value="{{ query|default:'' }}" class="form-control border-primary w-50 doctor-search-input" placeholder="Keyword" autocomplete="off">
+                <button type="submit" class="btn btn-dark border-0 w-25">Search</button>
+            </div>
+            <div class="doctor-search-suggestions"></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+{% load static %}
+<!-- Topbar Start -->
+<div class="topbar container-fluid d-none d-lg-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <a class="topbar-link pe-3" href="tel:{{ site_settings.phone }}"><i
+                            class="bi bi-telephone-fill me-2"></i>{{ site_settings.phone }}</a>
+                    <span class="topbar-divider">|</span>
+                    <a class="topbar-link px-3" href="mailto:{{ site_settings.email }}"><i
+                            class="bi bi-envelope-fill me-2"></i>{{ site_settings.email }}</a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-lg-end">
+                <div class="d-inline-flex align-items-center">
+                    <a class="topbar-social" href="{{ site_settings.facebook_url }}">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="topbar-social" href="{{ site_settings.twitter_url }}">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="topbar-social" href="{{ site_settings.linkedin_url }}">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="topbar-social" href="{{ site_settings.instagram_url }}">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="topbar-social" href="{{ site_settings.youtube_url }}">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top bg-white main-navbar{% if active != 'home' %} mb-5{% endif %}" id="mainNavbar">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a href="{% url 'core:home' %}" class="navbar-brand d-flex align-items-center">
+                <div class="navbar-logo-wrap me-2">
+                    <img src="{% static 'core/img/logo.png' %}" alt="{{ site_settings.site_name }}" class="navbar-logo">
+                </div>
+                <div class="navbar-brand-text">
+                    <h1 class="m-0 text-uppercase">{{ site_settings.site_name }}</h1>
+                    <span class="navbar-brand-tagline">Eye &amp; Heart Care</span>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0 align-items-lg-center">
+                    <a href="{% url 'core:home' %}" class="nav-item nav-link {% if active == 'home' %}active{% endif %}">Home</a>
+                    <a href="{% url 'core:about' %}" class="nav-item nav-link {% if active == 'about' %}active{% endif %}">About</a>
+                    <div class="nav-item dropdown">
+                        <a href="{% url 'core:service' %}" class="nav-link dropdown-toggle {% if active == 'service' %}active{% endif %}" data-bs-toggle="dropdown">Service</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'core:service' %}" class="dropdown-item">All Services</a>
+                            <div class="dropdown-divider"></div>
+                            {% for service in nav_services %}
+                            <a href="{{ service.get_absolute_url }}" class="dropdown-item"><i class="fa {{ service.icon_class }} me-2"></i>{{ service.title }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="{% url 'core:price' %}" class="nav-link dropdown-toggle {% if active == 'price' %}active{% endif %}" data-bs-toggle="dropdown">Doctor</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'core:price' %}" class="dropdown-item">All Doctors</a>
+                            <div class="dropdown-divider"></div>
+                            {% for doctor in nav_doctors %}
+                            <a href="{{ doctor.get_absolute_url }}" class="dropdown-item">{{ doctor.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle {% if active in pages_group %}active{% endif %}" data-bs-toggle="dropdown">More</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'core:blog' %}" class="dropdown-item {% if active == 'blog' %}active{% endif %}">Blog</a>
+                            <a href="{% url 'core:detail' %}" class="dropdown-item {% if active == 'detail' %}active{% endif %}">Latest Article</a>
+                            <a href="{% url 'core:team' %}" class="dropdown-item {% if active == 'team' %}active{% endif %}">Our Doctors</a>
+                            <a href="{% url 'core:testimonial' %}" class="dropdown-item {% if active == 'testimonial' %}active{% endif %}">Testimonials</a>
+                            <a href="{% url 'core:appointment' %}" class="dropdown-item {% if active == 'appointment' %}active{% endif %}">Book Appointment</a>
+                            <a href="{% url 'core:search' %}" class="dropdown-item {% if active == 'search' %}active{% endif %}">Find A Doctor</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'core:contact' %}" class="nav-item nav-link {% if active == 'contact' %}active{% endif %}">Contact</a>
+                    <a href="{% url 'core:appointment' %}" class="btn btn-primary rounded-pill px-4 ms-lg-4 my-3 my-lg-0">Book Appointment</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->

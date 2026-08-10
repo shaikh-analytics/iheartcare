@@ -1,0 +1,42 @@
+{% load static %}
+<!-- About Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row gx-5 align-items-start">
+            <div class="col-lg-5 mb-5 mb-lg-0" style="height: 500px;">
+                <div class="position-relative h-100">
+                    {% if about_page.image %}
+                    <img class="position-absolute w-100 h-100 rounded" src="{{ about_page.image.url }}"
+                        style="object-fit: cover;">
+                    {% else %}
+                    <img class="position-absolute w-100 h-100 rounded" src="{% static 'core/img/about.jpg' %}"
+                        style="object-fit: cover;">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">{{ about_page.tagline }}</h5>
+                    <h1 class="display-4">{{ about_page.heading }}</h1>
+                </div>
+                {% if active != 'about' %}
+                <p class="about-description-clamp">{{ about_page.description }}</p>
+                <a href="{% url 'core:about' %}" class="about-readmore-link mb-2">Read More...</a>
+                {% else %}
+                <p>{{ about_page.description }}</p>
+                {% endif %}
+                <div class="row g-3 pt-3">
+                    {% for feature in about_features %}
+                    <div class="col-sm-3 col-6">
+                        <div class="bg-light text-center rounded-circle py-4">
+                            <i class="fa fa-3x {{ feature.icon_class }} text-primary mb-3"></i>
+                            <h6 class="mb-0">{{ feature.title }}<small class="d-block text-primary">{{ feature.subtitle }}</small></h6>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->

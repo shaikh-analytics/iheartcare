@@ -1,0 +1,15 @@
+<!-- Our Doctors Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
+            <h1 class="display-4">Qualified Healthcare Professionals</h1>
+        </div>
+        <div class="owl-carousel doctors-carousel position-relative" style="padding: 0 45px 45px 45px;">
+            {% for doctor in doctors %}
+            {% include "partials/doctor_price_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Our Doctors End -->

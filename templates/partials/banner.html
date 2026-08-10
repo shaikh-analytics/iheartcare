@@ -1,0 +1,48 @@
+{% load static %}
+<!-- Hero Start -->
+<div class="container-fluid p-0 mb-5">
+    {% if banners %}
+    <div class="owl-carousel hero-carousel position-relative">
+        {% for banner in banners %}
+        <div class="position-relative">
+            <img class="img-fluid w-100" src="{{ banner.image.url }}" style="height: 600px; object-fit: cover;" alt="{{ banner.title }}">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                style="background: linear-gradient(90deg, rgba(29, 42, 77, .92) 0%, rgba(29, 42, 77, .75) 35%, rgba(29, 42, 77, .25) 70%, rgba(29, 42, 77, 0) 100%);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-lg-8 text-center text-lg-start">
+                            {% if banner.subtitle %}
+                            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
+                                style="border-color: rgba(256, 256, 256, .3) !important;">{{ banner.subtitle }}</h5>
+                            {% endif %}
+                            <h1 class="display-1 text-white mb-md-4">{{ banner.title }}</h1>
+                            <div class="pt-2">
+                                <a href="{% url 'core:team' %}" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Doctor</a>
+                                <a href="{% url 'core:appointment' %}" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="container-fluid bg-primary py-5">
+        <div class="container py-5">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
+                        style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To {{ site_settings.site_name }}</h5>
+                    <h1 class="display-1 text-white mb-md-4">Best Healthcare Solution In Your City</h1>
+                    <div class="pt-2">
+                        <a href="{% url 'core:team' %}" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Doctor</a>
+                        <a href="{% url 'core:appointment' %}" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<!-- Hero End -->
