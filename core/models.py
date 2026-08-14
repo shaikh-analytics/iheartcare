@@ -1,3 +1,6 @@
+from urllib.parse import parse_qs, urlparse
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -198,6 +201,100 @@ class Package(models.Model):
     @property
     def feature_list(self):
         return [line.strip() for line in self.features.splitlines() if line.strip()]
+
+
+class GalleryPhoto(models.Model):
+    """A single image in the public photo gallery, uploaded by the admin."""
+
+    title = models.CharField(max_length=150, blank=True)
+    image = models.ImageField(upload_to="gallery/photos/")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "-id"]
+        verbose_name = "Gallery Photo"
+        verbose_name_plural = "Gallery Photos"
+
+    def __str__(self):
+        return self.title or f"Photo #{self.pk}"
+
+
+class GalleryVideo(models.Model):
+    """A single video in the public video gallery — either an uploaded file or a YouTube link."""
+
+    SOURCE_UPLOAD = "upload"
+    SOURCE_YOUTUBE = "youtube"
+    SOURCE_CHOICES = [
+        (SOURCE_UPLOAD, "Uploaded Video"),
+        (SOURCE_YOUTUBE, "YouTube Link"),
+    ]
+
+    title = models.CharField(max_length=150, blank=True)
+    source = models.CharField(max_length=10, choices=SOURCE_CHOICES, default=SOURCE_YOUTUBE)
+    video_file = models.FileField(
+        upload_to="gallery/videos/", blank=True, null=True, help_text="Required when source is 'Uploaded Video'."
+    )
+    youtube_url = models.URLField(
+        blank=True, help_text="Required when source is 'YouTube Link', e.g. https://www.youtube.com/watch?v=XXXXXXX"
+    )
+    thumbnail = models.ImageField(
+        upload_to="gallery/video_thumbs/",
+        blank=True,
+        null=True,
+        help_text="Optional cover image. YouTube videos use the official thumbnail automatically if left blank.",
+    )
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "-id"]
+        verbose_name = "Gallery Video"
+        verbose_name_plural = "Gallery Videos"
+
+    def __str__(self):
+        return self.title or f"Video #{self.pk}"
+
+    def clean(self):
+        super().clean()
+        if self.source == self.SOURCE_UPLOAD and not self.video_file:
+            raise ValidationError({"video_file": "Upload a video file, or switch the source to 'YouTube Link'."})
+        if self.source == self.SOURCE_YOUTUBE and not self.youtube_url:
+            raise ValidationError({"youtube_url": "Enter a YouTube URL, or switch the source to 'Uploaded Video'."})
+
+    @property
+    def is_youtube(self):
+        return self.source == self.SOURCE_YOUTUBE
+
+    @property
+    def youtube_id(self):
+        if not self.youtube_url:
+            return ""
+        parsed = urlparse(self.youtube_url)
+        host = parsed.netloc.lower()
+        if "youtu.be" in host:
+            return parsed.path.lstrip("/")
+        if "youtube.com" in host:
+            if parsed.path == "/watch":
+                return parse_qs(parsed.query).get("v", [""])[0]
+            if parsed.path.startswith("/embed/"):
+                return parsed.path.split("/embed/")[-1]
+            if parsed.path.startswith("/shorts/"):
+                return parsed.path.split("/shorts/")[-1]
+        return ""
+
+    @property
+    def embed_url(self):
+        video_id = self.youtube_id
+        return f"https://www.youtube.com/embed/{video_id}" if video_id else ""
+
+    @property
+    def thumbnail_url(self):
+        if self.thumbnail:
+            return self.thumbnail.url
+        if self.is_youtube and self.youtube_id:
+            return f"https://img.youtube.com/vi/{self.youtube_id}/hqdefault.jpg"
+        return ""
 
 
 class BlogPost(models.Model):

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Video Gallery - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Gallery Videos Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Gallery</h5>
+            <h1 class="display-4">Watch Our Videos</h1>
+        </div>
+        <div class="row g-4">
+            {% for video in videos %}
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-video-card rounded overflow-hidden h-100" data-bs-toggle="modal"
+                    data-bs-target="#galleryVideoModal" data-title="{{ video.title }}"
+                    {% if video.is_youtube %}data-embed="{{ video.embed_url }}" data-watch="{{ video.youtube_url }}"{% else %}data-file="{{ video.video_file.url }}"{% endif %}>
+                    <div class="gallery-video-thumb-wrap">
+                        {% if video.thumbnail_url %}
+                        <img class="img-fluid w-100 gallery-video-thumb" src="{{ video.thumbnail_url }}"
+                            alt="{{ video.title|default:site_settings.site_name }}">
+                        {% else %}
+                        <img class="img-fluid w-100 gallery-video-thumb" src="{% static 'core/img/blog-1.jpg' %}"
+                            alt="{{ video.title|default:site_settings.site_name }}">
+                        {% endif %}
+                        <div class="gallery-video-play">
+                            <i class="fa fa-play"></i>
+                        </div>
+                    </div>
+                    {% if video.title %}
+                    <div class="p-3 bg-light">
+                        <h6 class="m-0">{{ video.title }}</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No videos have been added yet. Check back soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Gallery Videos End -->
+
+<!-- Video Player Modal -->
+<div class="modal fade gallery-video-modal" id="galleryVideoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white" id="galleryVideoModalTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="ratio ratio-16x9" id="galleryVideoModalFrame"></div>
+                <div class="gallery-video-fallback d-none flex-column align-items-center justify-content-center text-center text-white p-5"
+                    id="galleryVideoModalFallback">
+                    <i class="bi bi-exclamation-circle fs-1 d-block mb-3"></i>
+                    <p class="mb-4">This video can't be played here — the owner has restricted embedding.</p>
+                    <a href="#" target="_blank" rel="noopener" class="btn btn-primary rounded-pill px-4"
+                        id="galleryVideoModalWatchLink">
+                        Watch on YouTube <i class="bi bi-box-arrow-up-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

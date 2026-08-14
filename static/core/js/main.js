@@ -126,6 +126,32 @@
     });
 
 
+    // Latest blog posts carousel (homepage)
+    $(".blog-carousel").owlCarousel({
+        autoplay: true,
+        smartSpeed: 1000,
+        margin: 45,
+        dots: false,
+        loop: true,
+        nav : true,
+        navText : [
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
+        ],
+        responsive: {
+            0:{
+                items:1
+            },
+            768:{
+                items:2
+            },
+            1200:{
+                items:3
+            }
+        }
+    });
+
+
     // Team carousel
     $(".team-carousel, .related-carousel").owlCarousel({
         autoplay: true,
@@ -262,6 +288,69 @@
         var $box = $(this).closest('.doctor-search-form').find('.doctor-search-suggestions');
         if ($box.children().length) {
             $box.addClass('show');
+        }
+    });
+
+    // Gallery - photo lightbox modal
+    $(document).on('show.bs.modal', '#galleryPhotoModal', function (e) {
+        var $trigger = $(e.relatedTarget);
+        $('#galleryPhotoModalImg').attr('src', $trigger.data('img'));
+        $('#galleryPhotoModalTitle').text($trigger.data('title') || '');
+    });
+
+    // Gallery - video player modal (YouTube embed or uploaded file)
+    function resetVideoModal() {
+        $('#galleryVideoModalFrame').removeClass('d-none').empty();
+        $('#galleryVideoModalFallback').addClass('d-none');
+    }
+
+    function showVideoFallback(watchUrl) {
+        $('#galleryVideoModalFrame').addClass('d-none').empty();
+        $('#galleryVideoModalWatchLink').attr('href', watchUrl || 'https://www.youtube.com');
+        $('#galleryVideoModalFallback').removeClass('d-none');
+    }
+
+    $(document).on('show.bs.modal', '#galleryVideoModal', function (e) {
+        var $trigger = $(e.relatedTarget);
+        var embed = $trigger.data('embed');
+        var file = $trigger.data('file');
+        var watchUrl = $trigger.data('watch');
+
+        resetVideoModal();
+        $('#galleryVideoModalTitle').text($trigger.data('title') || '');
+        $('#galleryVideoModal').data('watch-url', watchUrl);
+
+        if (embed) {
+            var src = embed + '?autoplay=1&rel=0&enablejsapi=1&origin=' + encodeURIComponent(window.location.origin);
+            $('#galleryVideoModalFrame').append(
+                '<iframe src="' + src + '" title="video" ' +
+                'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'
+            );
+        } else if (file) {
+            $('#galleryVideoModalFrame').append('<video src="' + file + '" controls autoplay class="w-100 h-100"></video>');
+        }
+    });
+    $(document).on('hidden.bs.modal', '#galleryVideoModal', function () {
+        resetVideoModal();
+    });
+
+    // YouTube posts onError (100 = not found, 101/150 = embedding disabled by the video owner)
+    $(window).on('message', function (e) {
+        var origEvent = e.originalEvent;
+        if (!origEvent || typeof origEvent.data !== 'string') {
+            return;
+        }
+        if (!/^https:\/\/(www\.)?youtube(-nocookie)?\.com$/.test(origEvent.origin)) {
+            return;
+        }
+        var payload;
+        try {
+            payload = JSON.parse(origEvent.data);
+        } catch (err) {
+            return;
+        }
+        if (payload.event === 'onError') {
+            showVideoFallback($('#galleryVideoModal').data('watch-url'));
         }
     });
 

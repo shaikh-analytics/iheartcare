@@ -5,13 +5,25 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 
 from .forms import AppointmentForm, ContactForm
-from .models import AboutPage, Banner, BlogPost, Department, Doctor, Package, Service, Testimonial
+from .models import (
+    AboutPage,
+    Banner,
+    BlogPost,
+    Department,
+    Doctor,
+    GalleryPhoto,
+    GalleryVideo,
+    Package,
+    Service,
+    Testimonial,
+)
 
 PAGES_GROUP = ["blog", "detail", "team", "testimonial", "appointment", "search"]
+GALLERY_GROUP = ["gallery_photos", "gallery_videos"]
 
 
 def _base_context(active):
-    return {"active": active, "pages_group": PAGES_GROUP}
+    return {"active": active, "pages_group": PAGES_GROUP, "gallery_group": GALLERY_GROUP}
 
 
 def home(request):
@@ -24,9 +36,9 @@ def home(request):
             "about_features": about_page.features.all(),
             "services": Service.objects.all()[:6],
             "packages": Package.objects.all(),
-            "doctors": Doctor.objects.filter(is_featured=True)[:3],
-            "testimonials": Testimonial.objects.all()[:3],
-            "blog_posts": BlogPost.objects.filter(is_published=True)[:3],
+            "doctors": Doctor.objects.filter(is_featured=True)[:10],
+            "testimonials": Testimonial.objects.all()[:10],
+            "blog_posts": BlogPost.objects.filter(is_published=True)[:10],
             "departments": Department.objects.all(),
             "appointment_form": AppointmentForm(),
         }
@@ -130,6 +142,18 @@ def doctor_detail(request, slug):
         }
     )
     return render(request, "team/detail.html", context)
+
+
+def gallery_photos(request):
+    context = _base_context("gallery_photos")
+    context["photos"] = GalleryPhoto.objects.filter(is_active=True)
+    return render(request, "gallery/photos.html", context)
+
+
+def gallery_videos(request):
+    context = _base_context("gallery_videos")
+    context["videos"] = GalleryVideo.objects.filter(is_active=True)
+    return render(request, "gallery/videos.html", context)
 
 
 def testimonial(request):

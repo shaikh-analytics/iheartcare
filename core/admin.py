@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import (
     AboutFeature,
@@ -9,6 +10,8 @@ from .models import (
     ContactMessage,
     Department,
     Doctor,
+    GalleryPhoto,
+    GalleryVideo,
     Package,
     Service,
     SiteSettings,
@@ -80,6 +83,34 @@ class ServiceAdmin(admin.ModelAdmin):
 class PackageAdmin(admin.ModelAdmin):
     list_display = ("title", "price", "period", "order")
     list_editable = ("order",)
+
+
+@admin.register(GalleryPhoto)
+class GalleryPhotoAdmin(admin.ModelAdmin):
+    list_display = ("thumbnail_preview", "title", "order", "is_active")
+    list_editable = ("order", "is_active")
+    ordering = ("order",)
+
+    @admin.display(description="Preview")
+    def thumbnail_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="height:45px;border-radius:4px;">', obj.image.url)
+        return "—"
+
+
+@admin.register(GalleryVideo)
+class GalleryVideoAdmin(admin.ModelAdmin):
+    list_display = ("thumbnail_preview", "title", "source", "order", "is_active")
+    list_editable = ("order", "is_active")
+    list_filter = ("source",)
+    ordering = ("order",)
+
+    @admin.display(description="Preview")
+    def thumbnail_preview(self, obj):
+        url = obj.thumbnail_url
+        if url:
+            return format_html('<img src="{}" style="height:45px;border-radius:4px;">', url)
+        return "—"
 
 
 @admin.register(BlogPost)

@@ -47,7 +47,7 @@
                 </div>
                 <div class="navbar-brand-text">
                     <h1 class="m-0 text-uppercase">{{ site_settings.site_name }}</h1>
-                    <span class="navbar-brand-tagline">Eye &amp; Heart Care</span>
+                    <span class="navbar-brand-tagline">Multispeciality Hospital</span>
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -75,6 +75,13 @@
                             {% for doctor in nav_doctors %}
                             <a href="{{ doctor.get_absolute_url }}" class="dropdown-item">{{ doctor.name }}</a>
                             {% endfor %}
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle {% if active in gallery_group %}active{% endif %}" data-bs-toggle="dropdown">Gallery</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'core:gallery_photos' %}" class="dropdown-item {% if active == 'gallery_photos' %}active{% endif %}"><i class="fa fa-images me-2"></i>Photos</a>
+                            <a href="{% url 'core:gallery_videos' %}" class="dropdown-item {% if active == 'gallery_videos' %}active{% endif %}"><i class="fa fa-video me-2"></i>Videos</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Photo Gallery - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Gallery Photos Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Gallery</h5>
+            <h1 class="display-4">Moments From Our Clinic</h1>
+        </div>
+        <div class="row g-4">
+            {% for photo in photos %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="gallery-photo-card rounded overflow-hidden" data-bs-toggle="modal"
+                    data-bs-target="#galleryPhotoModal" data-img="{{ photo.image.url }}"
+                    data-title="{{ photo.title }}">
+                    <img class="img-fluid w-100 gallery-photo-img" src="{{ photo.image.url }}"
+                        alt="{{ photo.title|default:site_settings.site_name }}">
+                    <div class="gallery-photo-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+                {% if photo.title %}
+                <p class="text-center mt-2 mb-0 small text-muted">{{ photo.title }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No photos have been added yet. Check back soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Gallery Photos End -->
+
+<!-- Photo Lightbox Modal -->
+<div class="modal fade gallery-photo-modal" id="galleryPhotoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <button type="button" class="btn-close btn-close-white ms-auto mb-2" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            <img src="" alt="" class="img-fluid rounded w-100" id="galleryPhotoModalImg">
+            <p class="text-white text-center mt-3 mb-0" id="galleryPhotoModalTitle"></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
