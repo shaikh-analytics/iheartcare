@@ -40,6 +40,9 @@ variant "page"  = used as the standalone appointment page content
                             <div class="col-12 col-sm-6">
                                 {{ appointment_form.email }}
                             </div>
+                            <div class="col-12">
+                                {{ appointment_form.phone }}
+                            </div>
                             <div class="col-12 col-sm-6">
                                 <div class="date" id="date" data-target-input="nearest">
                                     {{ appointment_form.preferred_date }}

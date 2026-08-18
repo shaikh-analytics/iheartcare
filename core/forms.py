@@ -37,11 +37,12 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ["department", "doctor", "name", "email", "preferred_date", "preferred_time"]
+        fields = ["department", "doctor", "name", "email", "phone", "preferred_date", "preferred_time"]
         widgets = {
             "department": forms.Select(attrs=SELECT_ATTRS),
             "name": forms.TextInput(attrs={**TEXT_ATTRS, "placeholder": "Your Name"}),
             "email": forms.EmailInput(attrs={**TEXT_ATTRS, "placeholder": "Your Email"}),
+            "phone": forms.TextInput(attrs={**TEXT_ATTRS, "placeholder": "Your Phone Number"}),
             "preferred_date": forms.TextInput(
                 attrs={
                     **TEXT_ATTRS,

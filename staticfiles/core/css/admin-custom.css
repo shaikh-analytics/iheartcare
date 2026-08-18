@@ -1,0 +1,134 @@
+/* IHeartCare brand theme for the Django admin.
+   Brand palette pulled from static/core/css/style.css */
+
+html[data-theme="light"],
+:root {
+    --primary: #13C5DD;
+    --secondary: #354F8E;
+    --accent: #13C5DD;
+    --primary-fg: #fff;
+
+    --header-color: #fff;
+    --header-branding-color: var(--primary-fg);
+    --header-bg: #1D2A4D;
+    --header-link-color: var(--primary-fg);
+
+    --breadcrumbs-fg: #d7ecf1;
+    --breadcrumbs-link-fg: #fff;
+    --breadcrumbs-bg: #354F8E;
+
+    --link-fg: #354F8E;
+    --link-hover-color: #13C5DD;
+    --link-selected-fg: #354F8E;
+
+    --button-bg: #354F8E;
+    --button-hover-bg: #2a3f72;
+    --default-button-bg: #13C5DD;
+    --default-button-hover-bg: #10aec3;
+    --close-button-bg: #6c757d;
+    --close-button-hover-bg: #545b62;
+
+    --selected-bg: #EFF5F9;
+    --selected-row: #e4f8fb;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary: #13C5DD;
+        --header-bg: #12192e;
+        --breadcrumbs-bg: #1D2A4D;
+        --link-fg: #4fd8ea;
+        --link-hover-color: #13C5DD;
+    }
+}
+
+html[data-theme="dark"] {
+    --primary: #13C5DD;
+    --header-bg: #12192e;
+    --breadcrumbs-bg: #1D2A4D;
+    --link-fg: #4fd8ea;
+    --link-hover-color: #13C5DD;
+}
+
+/* Branding */
+#header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+#branding #site-name a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.admin-logo {
+    height: 32px;
+    width: auto;
+    border-radius: 6px;
+}
+
+div.breadcrumbs {
+    font-weight: 500;
+}
+
+/* Module headers */
+.module h2, .module caption, .inline-group h2 {
+    border-radius: 4px 4px 0 0;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    border-radius: 6px;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: var(--default-button-bg);
+    font-weight: 600;
+}
+
+.button.default:active, .button.default:focus, .button.default:hover,
+input[type=submit].default:active, input[type=submit].default:focus, input[type=submit].default:hover {
+    background: var(--default-button-hover-bg);
+}
+
+/* Dashboard module cards */
+.dashboard .module table th {
+    width: auto;
+}
+
+#content-related .module {
+    border-radius: 6px;
+}
+
+/* Login page */
+.login #header {
+    justify-content: center;
+}
+
+.login #branding #site-name a {
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+.login .admin-logo {
+    height: 56px;
+}
+
+.login #content {
+    max-width: 420px;
+    margin: 40px auto 0;
+}
+
+.login .form-row {
+    padding: 8px 0;
+}
+
+.login .submit-row input {
+    background: var(--default-button-bg);
+    width: 100%;
+}
+
+.login .submit-row input:hover {
+    background: var(--default-button-hover-bg);
+}

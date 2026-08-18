@@ -345,6 +345,7 @@ class Appointment(models.Model):
 
     name = models.CharField(max_length=150)
     email = models.EmailField()
+    phone = models.CharField(max_length=20, default="")
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
     preferred_date = models.DateField(null=True, blank=True)

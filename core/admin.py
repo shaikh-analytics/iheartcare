@@ -18,6 +18,10 @@ from .models import (
     Testimonial,
 )
 
+admin.site.site_header = "IHeartCare Administration"
+admin.site.site_title = "IHeartCare Admin"
+admin.site.index_title = "Dashboard"
+
 
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
@@ -129,10 +133,10 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "department", "doctor", "preferred_date", "status", "created_at")
+    list_display = ("name", "email", "phone", "department", "doctor", "preferred_date", "status", "created_at")
     list_filter = ("status", "department")
     list_editable = ("status",)
-    search_fields = ("name", "email")
+    search_fields = ("name", "email", "phone")
     readonly_fields = ("created_at",)
 
 

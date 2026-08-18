@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Large media not tracked in git (served/uploaded separately)
+media/gallery/videos/WhatsApp_Video_2026-08-18_at_13.10.32.mp4
